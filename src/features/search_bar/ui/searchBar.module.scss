@@ -1,0 +1,92 @@
+// TODO: use vars instead of colors
+
+.searchBar {
+  display: flex;
+  border-radius: 25px;
+
+  &:focus-within {
+    outline: 1px solid rgb(106, 109, 145);
+  }
+}
+
+.searchInput {
+  border: none;
+  padding: 0.8rem;
+  border-right: 1px solid #352b4b;
+  border-radius: 25px 0 0 25px;
+  background-color: rgb(18, 18, 18);
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.searchBtn {
+  border-radius: 0 25px 25px 0;
+  padding: 0.6rem 1rem 0.6rem 0.6rem;
+  background-color: rgb(18, 18, 18);
+  border: none;
+  font-size: 0;
+
+  &_ico {
+    width: 16px;
+    height: 16px;
+    filter: invert(100%);
+
+  }
+
+  &[disabled] {
+    cursor: default;
+  }
+  
+  &[disabled] &_ico{
+    opacity: 0.3;
+  }
+
+  &:focus-visible {
+    background-color: rgb(105, 98, 204);
+  }
+}
+
+.resetBtn {
+  border-radius: 0;
+  background-color: rgb(18, 18, 18);
+  padding: 0.6rem;
+  border: none;
+  border-right: 1px solid #352b4b;
+  font-size: 0;
+
+  &_ico {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+
+    &_line {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 2px;
+      background-color: #6d5c92;
+
+      &:first-child {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+
+      &:last-child {
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+    }
+  }
+
+  &:focus-visible {
+    background-color: rgb(105, 98, 204);
+  }
+
+  &:focus-visible &_ico_line{
+    background-color: white;
+  }
+}
