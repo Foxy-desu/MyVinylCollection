@@ -1,0 +1,39 @@
+.vApple {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 30%;
+}
+
+.vAppleBg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  
+  @media(prefers-color-scheme: light) {
+    background: linear-gradient(90deg, hsla(341, 94%, 49%, 1) 0%, hsla(16, 90%, 77%, 1) 100%);
+  }
+  @media(prefers-color-scheme: dark) {
+    background: linear-gradient(90deg, hsla(205, 46%, 30%, 1) 0%, hsla(260, 29%, 36%, 1) 100%);
+  }
+}
+
+.vAppleLine {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 19%;
+  height: 19%;
+  border-radius: 50%;
+
+  @media(prefers-color-scheme: light) {
+    background-color: #fcdcd4;
+  }
+
+  @media(prefers-color-scheme: dark) {
+    background-color: #0a0a0a;
+  }
+}

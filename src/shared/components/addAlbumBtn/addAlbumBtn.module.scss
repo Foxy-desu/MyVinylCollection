@@ -1,0 +1,65 @@
+.addAlbum {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: radial-gradient(circle, rgba(126,126,126,1) 0%, rgba(0,0,0,1) 25%, rgba(29,29,29,1) 90%);
+  // border: 2px solid rgb(54 62 91 / 71%);
+  border-radius: inherit;
+  transition: border-color 0.25s;
+  cursor: pointer;
+
+  // &:focus,
+  &:focus-visible {
+    outline: 2px solid -webkit-focus-ring-color;
+  }
+
+}
+
+
+.shimer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(63 64 85 / 0%);
+  border-radius: inherit;
+  transition: background-color .9s ease-out;
+
+  @media (hover:hover) {
+    &::after {
+      content: '+';
+      font-size: clamp(10px, 7vw, 58px);
+      transform: translateY(-5%);
+      color: #5b5d8f00;
+      transition: color .2s ease-out;
+    }
+
+    &:hover {
+      background-color: rgb(63 64 85 / 42%);
+      
+      &::after {
+        content: '+';
+        font-size: clamp(10px, 7vw, 58px);
+        transform: translateY(-5%);
+        color: #cacbf7;
+      }
+    }
+  }
+
+  @media (hover: none) {
+    &::after {
+      content: '+';
+      font-size: clamp(10px, 7vw, 58px);
+      transform: translateY(-5%);
+      color: #cacbf7;
+    }
+  }
+  
+}
