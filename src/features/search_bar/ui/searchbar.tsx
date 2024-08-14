@@ -4,15 +4,15 @@ import cl from './searchBar.module.scss';
 interface ISearchBarProps {
   query: string;
   changeInput: (value: string) => void;
-  resetInput: () => void;
   search: () => void;
+  reset: () => void;
   inputId?: string;
 };
 type TSearchHandlerParam = React.MouseEvent<HTMLButtonElement, MouseEvent> | React.FormEvent<HTMLInputElement> | undefined;
 type TChangeInputHandlerParam = React.ChangeEvent<HTMLInputElement>;
 
-const SearchBar =({query, changeInput, search, resetInput, inputId='searchInput'}:ISearchBarProps)=> {
-  // const isDisabled = useMemo(()=> !query, [query]);
+const SearchBar =({query, changeInput, search, reset, inputId='searchInput'}:ISearchBarProps)=> {
+
   function handleSearch(e?:TSearchHandlerParam){
     e?.preventDefault();
     search();
@@ -21,7 +21,7 @@ const SearchBar =({query, changeInput, search, resetInput, inputId='searchInput'
     changeInput(e.target.value);
   };
   function handleReset(){
-    resetInput();
+    reset();
   };
   function handleKeyDown(e:React.KeyboardEvent<HTMLInputElement>){
     if (e.key === 'Enter' || e.keyCode === 13) {

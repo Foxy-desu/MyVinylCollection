@@ -3,7 +3,6 @@ import SearchBar from "../ui/searchbar";
 
 const SearchBarContainer =({filterAlbumsWithQuery}:{filterAlbumsWithQuery: any})=> {
   const [query, setQuery] = useState('');
-
   function changeQueryString(value: string) {
     setQuery(value);
   };
@@ -13,10 +12,14 @@ const SearchBarContainer =({filterAlbumsWithQuery}:{filterAlbumsWithQuery: any})
   function search() {
     filterAlbumsWithQuery(query);
   };
+  function resetAndSearch(){
+    resetQueryString();
+    filterAlbumsWithQuery('');
+  }
 
   return (
     <>
-      <SearchBar query={query} changeInput={changeQueryString} search={search} resetInput={resetQueryString}/>
+      <SearchBar query={query} changeInput={changeQueryString} search={search} reset={resetAndSearch}/>
     </>
   )
 };
