@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { IAlbum } from "../../../app/store/albumsSlice";
-import SearchAndSortContainer from '../../../features/search_and_sort/model/searchAndSortContainer.tsx';
 import AddAlbumContainer from '../../../features/add_album/model/addAlbumContainer.tsx';
 import cl from './albums.module.scss';
+import SearchAndSort from "../../../entities/search_and_sort/ui/searchAndSort.tsx";
 
 const Albums =({albums, filterAlbumsWithQuery}:{albums: IAlbum[], filterAlbumsWithQuery:any})=> {
   return (
     <>
-      <SearchAndSortContainer filterAlbumsWithQuery={filterAlbumsWithQuery}/>
+      <SearchAndSort passQuery={filterAlbumsWithQuery} passSortMethod={(query:string)=> {alert(query)}}/>
       <section>
         <h2 className='vidually-hidden'>Albums collection</h2>
         <AlbumsCollection albums={albums}/>
