@@ -4,10 +4,19 @@ import AddAlbumContainer from '../../../features/add_album/model/addAlbumContain
 import cl from './albums.module.scss';
 import SearchAndSort from "../../../entities/search_and_sort/ui/searchAndSort.tsx";
 
-const Albums =({albums, filterAlbumsWithQuery}:{albums: IAlbum[], filterAlbumsWithQuery:any})=> {
+interface IAlbumsProps {
+  albums: IAlbum[];
+  filterAlbums: (query: string) => void;
+  sortAlbums: (sortMethod: string) => void;
+}
+interface IAlbumsCollectionProps {
+  albums: IAlbum[];
+}
+
+const Albums =({albums, filterAlbums, sortAlbums}:IAlbumsProps)=> {
   return (
     <>
-      <SearchAndSort passQuery={filterAlbumsWithQuery} passSortMethod={(query:string)=> {alert(query)}}/>
+      <SearchAndSort passQuery={filterAlbums} passSortMethod={sortAlbums}/>
       <section>
         <h2 className='vidually-hidden'>Albums collection</h2>
         <AlbumsCollection albums={albums}/>
@@ -16,7 +25,7 @@ const Albums =({albums, filterAlbumsWithQuery}:{albums: IAlbum[], filterAlbumsWi
   )
 };
 
-const AlbumsCollection =({albums}: {albums: Array<IAlbum>})=> {
+const AlbumsCollection =({albums}: IAlbumsCollectionProps)=> {
   function renderElements(albums: IAlbum[]){
     return albums.map((album)=> {
       return <>
@@ -34,7 +43,7 @@ const AlbumsCollection =({albums}: {albums: Array<IAlbum>})=> {
   )
 }
 
-const AlbumPreview =({album}:{album: IAlbum})=> {
+const AlbumPreview =({album}:{album:IAlbum})=> {
   const [isHovered, setIsHovered] = useState(false);
   function setHover() {
     setIsHovered(true)
@@ -59,7 +68,7 @@ const AlbumPreview =({album}:{album: IAlbum})=> {
   )
 }
 
-const NonHoveredPreview =({data}: {data: IAlbum})=> {
+const NonHoveredPreview =({data}: {data:IAlbum})=> {
   return (
     <div className={`${cl.labelsWrap}`} style={{width: '100%', height: '100%'}}>
         <h3 className={cl.coverLabel}>{data.album}</h3>
@@ -70,7 +79,7 @@ const NonHoveredPreview =({data}: {data: IAlbum})=> {
   )
 }
 
-const HoveredPreview =({data}: {data: IAlbum})=> {
+const HoveredPreview =({data}: {data:IAlbum})=> {
   return (
     <div className={`${cl.labelsWrap} ${cl.hovered}`} style={{width: '100%', height: '100%'}}>
       <div className={`${cl.coverElement} ${cl.transformed}`}>
