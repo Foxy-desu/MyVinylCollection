@@ -1,4 +1,4 @@
-import AddAlbumBtn from "../../../shared/components/addAlbumBtn/addAlbumBtn";
+import AddAlbumBtn from "../../../shared/components/add_album_btn/addAlbumBtn";
 import { IAddAlbumFormState } from "../model/addAlbumContainer";
 import cl from './addAlbum.module.scss';
 
