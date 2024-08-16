@@ -28,15 +28,13 @@ const Albums =({albums, filterAlbums, sortAlbums}:IAlbumsProps)=> {
 const AlbumsCollection =({albums}: IAlbumsCollectionProps)=> {
   function renderElements(albums: IAlbum[]){
     return albums.map((album)=> {
-      return <>
-        <AlbumPreview key={album.id} album={album}/>
-      </>
+      return <AlbumPreview key={album.id} album={album}/>
     })
   }
   return (
     <ul className={cl.list}>
-      <li className={`${cl.listItem}`}>
-        <AddAlbumContainer />
+      <li key={'0'} className={`${cl.listItem}`}>
+        <AddAlbumContainer/>
       </li>
       {renderElements(albums)}
     </ul>
