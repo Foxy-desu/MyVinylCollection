@@ -2,53 +2,35 @@ import FormInput from '../../../shared/components/form_input/formInput';
 import InputButton from '../../../shared/components/input_button/inputButton';
 import Tag from '../../../shared/components/tag/tagComponent';
 import CrossElement from '../../../shared/decorations/cross_element/crossElement';
+import {IInputWithListProps, IListBtn, IListElementProps, IPlainListProps, ITagListProps} from '../../../shared//utils/types';
 import cl from './inputWithList.module.scss';
 
 //TODO: clean component
-export interface IInputWithListProps {
-  listContentType: 'tags'|'listElements';
-  inputId: string;
-  inputValue: string;
-  inputTitle: string;
-  inputLabelVisible: boolean;
-  inputIsRequired: boolean;
-  changeInput: (value: string) => void;
-  inputPlaceholder: string;
-  inputBtnSrText: string;
-  inputBtnClick: ()=> void;
-  enterBtnCallback: ()=>void;
-  tags: Array<{title:string, id:string}>;
-  tagBtnClick: (id:string)=> void
-}
-interface IElemBtn extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  clickTagHandler: (e: React.MouseEvent<HTMLButtonElement>)=>void;
-}
 const inputWithList =({...props}:IInputWithListProps)=> {
   return (
     <div className={cl.inputBlock}>
       <div className={cl.inputWrap}>
-      <FormInput
-          id={props.inputId}
-          value={props.inputValue}
-          labelTitle={props.inputTitle}
-          labelVisible={props.inputLabelVisible}
-          isRequired={props.inputIsRequired}
-          changeValue={props.changeInput}
-          enterCallback={props.enterBtnCallback}
-          placeholder={props.inputPlaceholder}
-          type='text'
-      />
-      <InputButton srText={props.inputBtnSrText} onClick={props.inputBtnClick}>
-        <CrossElement rotateDegree={0}/>
-      </InputButton>
+        <FormInput
+            id={props.inputId}
+            value={props.inputValue}
+            labelTitle={props.inputTitle}
+            labelVisible={props.inputLabelVisible}
+            isRequired={props.inputIsRequired}
+            changeValue={props.changeInput}
+            enterCallback={props.enterBtnCallback}
+            placeholder={props.inputPlaceholder}
+            title={props.title}
+            type='text'
+        />
+        <InputButton srText={props.inputBtnSrText} onClick={props.inputBtnClick}/>
       </div>
-      {props.listContentType === 'tags' && <TagsList tags={props.tags} clickTag={props.tagBtnClick}/>}
-      {props.listContentType === 'listElements' && <ElementsList elements={props.tags} clickElementBtn={props.tagBtnClick}/>}
+      {props.listContentType === 'tags' && <TagsList tags={props.listItems} clickTag={props.tagBtnClick}/>}
+      {props.listContentType === 'listElements' && <PlainList elements={props.listItems} clickElementBtn={props.tagBtnClick}/>}
     </div>
   )
 };
 
-const TagsList =({tags, clickTag}:{tags:IInputWithListProps['tags'], clickTag:IInputWithListProps['tagBtnClick'] })=> {
+const TagsList =({tags, clickTag}:ITagListProps)=> {
   return (
     <div className={cl.tagsListWrap}>
         <ul className={cl.tagsList}>
@@ -59,35 +41,33 @@ const TagsList =({tags, clickTag}:{tags:IInputWithListProps['tags'], clickTag:II
       </div>
   )
 };
-
-const ElementsList =({elements, clickElementBtn}:{elements:IInputWithListProps['tags'], clickElementBtn:IInputWithListProps['tagBtnClick'] })=> {
+const PlainList =({elements, clickElementBtn}:IPlainListProps)=> {
   return (
     <div className={cl.tagsListWrap}>
-        <ul className={cl.tagsList}>
+        <ul className={`${cl.tagsList} ${cl.listType}`}>
           {elements.map((element, index)=>
-            <Element key={index} listElement={element} clickElementBtn={clickElementBtn}/>
+            <ListElement key={index} orderIndex={index+1} listElement={element} clickElementBtn={clickElementBtn}/>
           )}
         </ul>
       </div>
   )
-}
-
-const Element = ({listElement, clickElementBtn}:{listElement: {title:string, id:string}, clickElementBtn: (id:string)=>void})=> {
+};
+const ListElement = ({listElement, clickElementBtn, orderIndex}:IListElementProps)=> {
   
-  function handleTagRemoval(e: React.MouseEvent<HTMLButtonElement>){
+  function handleElementRemoval(e: React.MouseEvent<HTMLButtonElement>){
     e.preventDefault();
     clickElementBtn(listElement.id)
   }
 
   return (
-    <li className={cl.element}>
-      <span className={cl.tagTitle}>{listElement.title}</span>
-      <ElementBtn clickTagHandler={handleTagRemoval}/>
+    <li className={cl.listElement}>
+      <span>{orderIndex}</span>
+      <span className={cl.elementTitle}>{listElement.title}</span>
+      <ListBtn clickTagHandler={handleElementRemoval}/>
     </li>
   )
 };
-
-const ElementBtn = ({clickTagHandler, ...rest}:IElemBtn)=>{
+const ListBtn = ({clickTagHandler, ...rest}:IListBtn)=>{
   return (
     <button className={cl.tagBtn} onClick={clickTagHandler} {...rest}>
       <CrossElement rotateDegree={45}/>

@@ -1,0 +1,53 @@
+@import '../../../app/style/accessibilityStyles';
+
+.inputWrap {
+  display: flex;
+  align-items: flex-end;
+
+  //make form input full viewport width
+  & > *:first-child {
+    flex-grow: 1;
+
+    & > input {
+      border: 1px solid rgb(47, 47, 87);
+      border-radius: 2px 0 0 2px;
+    }
+  }
+
+  & > *:last-child {
+    border-radius: 0 2px 2px 0;
+  } 
+}
+
+.tagsListWrap {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid rgb(47, 47, 87);
+  border-top-width: 5px;
+  height: 100px;
+  overflow-y: auto;
+}
+
+.tagsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  transition: all 0.2 ease-out;
+
+  &.listType {
+    flex-direction: column;
+  }
+}
+
+.listElement {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-grow: 1;
+  border-bottom: 2px dashed rgb(77, 64, 116);
+  padding: 0.5rem;
+  background-color: rgba(67, 46, 124, 0.644);
+
+
+}

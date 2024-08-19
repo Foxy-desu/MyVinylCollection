@@ -1,49 +1,27 @@
-import { useEffect, useState } from "react";
-import InputWithList, { IInputWithListProps } from "../ui/inputWithList"
+import { useEffect } from "react";
+import InputWithList from "../ui/inputWithList"
 import { uid } from "../../../shared/utils/helpers/UIdCreator";
-
-interface IInputWithListContainerProps {
-  inputId: string;
-  inputTitle: string;
-  inputPlaceholder: string;
-  inputLabelVisible: boolean;
-  inputBtnSrText: string;
-  inputIsRequired: boolean;
-  listContentType: 'tags'|'listElements';
-  passListElements: ([]:TStateType) => void;
-};
-
-type TStateType = Array<{title:string, id:string}>|never[];
-
+import { formatData } from "../../../shared/utils/helpers/formatting";
+import { parseStringToArray } from "../../../shared/utils/helpers/parsers";
+import { useInputBlockData } from "./useInputBlockData";
+import {IInputWithListContainerProps, } from '../../../shared/utils/types';
 
 const InputWithListContainer =({...props}: IInputWithListContainerProps)=> {
-
-  const [inputValue, setInputValue]=useState('');
-  const [listItems, setListItems]=useState<TStateType>([]);
-  
-  function changeInput(value:string) {
-    setInputValue(value);
-  };
-  function resetInput(){
-    setInputValue('');
-  };
-  function addTag({title, id}:{title:string, id:string}){
-    setListItems([...listItems, {title, id}]);
-  };
-  function removeTag(listItems:IInputWithListProps['tags'],tagIdToRemove:string){
-    setListItems(listItems.filter((tag)=> {
-      return tag.id!== tagIdToRemove;
-    }))
+  const {inputValue,changeInput,listItems,addTags,removeTag,resetInput} = useInputBlockData();
+  function stringsToTagObjectsArray (stringsArray: string[]){
+    return stringsArray.map((string)=> {
+      return {title: formatData(string), id: uid()};
+    })
   };
   function handleTagAdding(){
-    const newTag = {title: inputValue, id: uid()};
-    addTag(newTag);
+    const parsedValueString = parseStringToArray(inputValue, ';');
+    const tagObjectsArray = stringsToTagObjectsArray(parsedValueString);
+    addTags(tagObjectsArray);
     resetInput();
   };
   function handleTagRemoval(id:string){
     removeTag(listItems, id);
   };
-
   useEffect(()=> {
     props.passListElements(listItems);
   }, [listItems]);
@@ -63,7 +41,8 @@ const InputWithListContainer =({...props}: IInputWithListContainerProps)=> {
         inputBtnSrText={props.inputBtnSrText}
         inputIsRequired={props.inputIsRequired}
         tagBtnClick={handleTagRemoval}
-        tags={listItems}
+        listItems={listItems}
+        title={props.inputPrompt}
       />
     </>
   )
