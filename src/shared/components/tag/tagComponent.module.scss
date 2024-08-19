@@ -1,0 +1,25 @@
+.tagComponent {
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  background: rgb(77, 64, 151);
+  border-radius: 25px;
+  transition: background-color 0.2s ease-out;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: rgb(89, 34, 105);
+    }
+  }
+
+}
+
+.tagTitle {
+  font-size: 1rem;
+  line-height: 1;
+
+  &::after {
+    display: inline-block;
+    margin-left: 0.5rem;
+    content: '×';
+  }
+}
