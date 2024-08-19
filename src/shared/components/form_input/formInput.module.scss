@@ -1,0 +1,28 @@
+@import '../../../app/style/accessibilityStyles';
+
+.inputLabel {
+  // position: absolute;
+  // margin-right: 0.8rem;
+  @extend %visuallyHidden;
+}
+.errOutput {
+  font-size: min(14px, 1rem);
+  color: rgb(130, 137, 238);
+}
+
+.input {
+  @include noOutlineOnFocus();
+  font-size: 1rem;
+  box-sizing: border-box;
+  max-height: 1.8rem;
+  padding: 5px;
+  width: 100%;
+
+  &::placeholder {
+    color: rgb(116, 111, 138);
+  }
+}
+
+.required {
+  color: rgb(130, 137, 238);
+}
