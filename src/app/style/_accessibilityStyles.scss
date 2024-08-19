@@ -1,0 +1,37 @@
+%visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(100%);
+  white-space: nowrap;
+}
+
+@mixin outlineOnInnerFocus($outline-color: rgb(106, 109, 145)) {
+  // only use it with the wrap element containing input elements, to highlight
+  // the wrap element on inner elements focused state
+
+  &:focus-within {
+    outline: 1px solid $outline-color;
+  }
+};
+
+@mixin noOutlineOnFocus ($child-element: '') {
+  &:focus #{$child-element} ,
+  &:focus-visible #{$child-element} {
+    outline: none;
+  }
+}
+
+@mixin colorOnFocus($child-element: '', $bg-color: rgb(105, 98, 204), $text-color: initial) {
+  &:focus-visible #{$child-element} {
+    background-color: $bg-color;
+    color: $text-color;
+  }
+}
+
