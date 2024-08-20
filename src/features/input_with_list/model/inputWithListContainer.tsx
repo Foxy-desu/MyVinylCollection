@@ -9,7 +9,7 @@ import { useValidate } from "./useValidate";
 
 const InputWithListContainer =({...props}: IInputWithListContainerProps)=> {
   const {inputValue,changeInput,listItems,addTags,removeTag,resetInput} = useInputBlockData();
-  const {validationError, isLocked} = useValidate(inputValue, props.inputIsRequired);
+  const {validationError, isLocked, validateInput} = useValidate(inputValue, props.inputIsRequired);
   function stringsToTagObjectsArray (stringsArray: string[]){
     return stringsArray.map((string)=> {
       return {title: formatData(string), id: uid()};
@@ -24,12 +24,16 @@ const InputWithListContainer =({...props}: IInputWithListContainerProps)=> {
   function handleTagRemoval(id:string){
     removeTag(listItems, id);
   };
+  function handleInputChangeWithValidation(value:string){
+    changeInput(value);
+    validateInput(value);
+  }
   useEffect(()=> {
     props.passListElements(listItems);
   }, [listItems]);
 
   useEffect(()=> {
-    console.log(`error? - ${validationError}\nisLocked? - ${isLocked}`)
+    console.log(`error? - ${JSON.stringify(validationError)}\nisLocked? - ${isLocked}`)
   },[validationError, isLocked]);
 
   return (
@@ -41,7 +45,7 @@ const InputWithListContainer =({...props}: IInputWithListContainerProps)=> {
         inputTitle={props.inputTitle}
         inputPlaceholder={props.inputPlaceholder}
         inputLabelVisible={props.inputLabelVisible}
-        changeInput={changeInput}
+        changeInput={handleInputChangeWithValidation}
         inputBtnClick={handleTagAdding}
         enterBtnCallback={handleTagAdding}
         inputBtnSrText={props.inputBtnSrText}
@@ -49,6 +53,8 @@ const InputWithListContainer =({...props}: IInputWithListContainerProps)=> {
         tagBtnClick={handleTagRemoval}
         listItems={listItems}
         title={props.inputPrompt}
+        validationErrorObject={validationError}
+        validationLock={isLocked}
       />
     </>
   )

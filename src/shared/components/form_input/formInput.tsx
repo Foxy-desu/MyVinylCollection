@@ -1,21 +1,14 @@
 import cl from './formInput.module.scss';
+import { IFormInput } from '../../utils/types';
 
-interface IFormInput extends React.InputHTMLAttributes<HTMLInputElement> {
-  labelTitle: string;
-  isRequired: boolean;
-  labelVisible: boolean;
-  changeValue: (value: string) => void;
-  enterCallback: () => void;
-  validationErrorMessage?:string;
-}
-const FormInput =({labelTitle,isRequired,labelVisible,changeValue,enterCallback,validationErrorMessage,...rest}:IFormInput)=> {
+const FormInput =({labelTitle,isRequired,labelVisible,changeValue,enterCallback,validationErrorObject,validationLock,...rest}:IFormInput)=> {
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>){
     e.preventDefault();
     changeValue((e.target.value));
   };
   function handleInputOnEnter(e: React.KeyboardEvent){
     if (e.key === 'Enter' || e.keyCode === 13) {
-      enterCallback()
+      !validationLock && enterCallback();
       e.preventDefault();
       return false;
     }
@@ -35,7 +28,7 @@ const FormInput =({labelTitle,isRequired,labelVisible,changeValue,enterCallback,
       >
       </label>
       <span className={cl.errOutput}>
-        {validationErrorMessage || ''}
+        {`${validationErrorObject?.emptyErr}${validationErrorObject?.symbolErr} `}
         &nbsp;
       </span>
       <input

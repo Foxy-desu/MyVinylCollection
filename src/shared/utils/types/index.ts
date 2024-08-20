@@ -1,4 +1,5 @@
 export type TInputWithListContainerListState = Array<{title:string, id:string}>|never[];
+export interface IInputValidationError {emptyErr:string, symbolErr:string}
 export interface IInputWithListContainerProps {
   inputId: string;
   inputTitle: string;
@@ -24,7 +25,9 @@ export interface IInputWithListProps {
   enterBtnCallback: ()=>void;
   listItems: Array<{title:string, id:string}>;
   title?: string | undefined;
-  tagBtnClick: (id:string)=> void
+  tagBtnClick: (id:string)=> void;
+  validationErrorObject?: IInputValidationError;
+  validationLock?: boolean;
 }
 export interface IListBtn extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   clickTagHandler: (e: React.MouseEvent<HTMLButtonElement>)=>void;
@@ -48,4 +51,13 @@ export interface IListElementProps {
   listElement: {title:string, id:string};
   clickElementBtn: (id:string)=>void;
   orderIndex: number
+}
+export interface IFormInput extends React.InputHTMLAttributes<HTMLInputElement> {
+  labelTitle: string;
+  isRequired: boolean;
+  labelVisible: boolean;
+  changeValue: (value: string) => void;
+  enterCallback: () => void;
+  validationErrorObject?:IInputValidationError;
+  validationLock?: boolean;
 }

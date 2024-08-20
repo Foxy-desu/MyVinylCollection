@@ -21,8 +21,10 @@ const inputWithList =({...props}:IInputWithListProps)=> {
             placeholder={props.inputPlaceholder}
             title={props.title}
             type='text'
+            validationErrorObject={props.validationErrorObject}
+            validationLock={props.validationLock}
         />
-        <InputButton srText={props.inputBtnSrText} onClick={props.inputBtnClick}/>
+        <InputButton srText={props.inputBtnSrText} onClick={props.inputBtnClick} disabled={props.validationLock} title={props.validationLock ? 'Make sure fill the field properly':''}/>
       </div>
       {props.listContentType === 'tags' && <TagsList tags={props.listItems} clickTag={props.tagBtnClick}/>}
       {props.listContentType === 'listElements' && <PlainList elements={props.listItems} clickElementBtn={props.tagBtnClick}/>}
