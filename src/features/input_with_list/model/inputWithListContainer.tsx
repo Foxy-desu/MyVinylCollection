@@ -5,9 +5,11 @@ import { formatData } from "../../../shared/utils/helpers/formatting";
 import { parseStringToArray } from "../../../shared/utils/helpers/parsers";
 import { useInputBlockData } from "./useInputBlockData";
 import {IInputWithListContainerProps, } from '../../../shared/utils/types';
+import { useValidate } from "./useValidate";
 
 const InputWithListContainer =({...props}: IInputWithListContainerProps)=> {
   const {inputValue,changeInput,listItems,addTags,removeTag,resetInput} = useInputBlockData();
+  const {validationError, isLocked} = useValidate(inputValue, props.inputIsRequired);
   function stringsToTagObjectsArray (stringsArray: string[]){
     return stringsArray.map((string)=> {
       return {title: formatData(string), id: uid()};
@@ -25,6 +27,10 @@ const InputWithListContainer =({...props}: IInputWithListContainerProps)=> {
   useEffect(()=> {
     props.passListElements(listItems);
   }, [listItems]);
+
+  useEffect(()=> {
+    console.log(`error? - ${validationError}\nisLocked? - ${isLocked}`)
+  },[validationError, isLocked]);
 
   return (
     <>
